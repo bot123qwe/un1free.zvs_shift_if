@@ -1,0 +1,159 @@
+<mvc:View controllerName="com.app.shiftif.ZVS_SHIFT_IF.controller.Worklist" xmlns="sap.uxap" xmlns:m="sap.m" xmlns:mvc="sap.ui.core.mvc"
+	xmlns:semantic="sap.m.semantic" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form"
+	xmlns:u="sap.ui.unified" xmlns:fb="sap.ui.comp.filterbar" xmlns:core="sap.ui.core" xmlns:t="sap.ui.table">
+	<semantic:FullscreenPage id="page" semanticRuleSet="Optimized" title="{i18n>worklistViewTitle}">
+		<semantic:content>
+			<ObjectPageHeaderContent>
+				<content>
+					<l:VerticalLayout class="sapUiLargeMarginTop sapUiMediumMarginBegin">
+						<l:layoutData>
+							<ObjectPageHeaderLayoutData showSeparatorAfter="false"/>
+						</l:layoutData>
+						<m:Label text="{i18n>F1}"/>
+						<m:ObjectNumber number="{worklistView>/f1}"></m:ObjectNumber>
+					</l:VerticalLayout>
+					<l:VerticalLayout class="sapUiLargeMarginTop sapUiLargeMarginBeginEnd">
+						<l:layoutData>
+							<ObjectPageHeaderLayoutData visibleS="false" showSeparatorAfter="false"/>
+						</l:layoutData>
+						<m:Label text="{i18n>F2}"/>
+						<m:ObjectNumber number="{worklistView>/f2}"></m:ObjectNumber>
+					</l:VerticalLayout>
+					<l:VerticalLayout class="sapUiLargeMarginTop">
+						<l:layoutData>
+							<ObjectPageHeaderLayoutData visibleM="false" showSeparatorAfter="false"/>
+						</l:layoutData>
+						<m:Label text="{i18n>F3}"/>
+						<m:ObjectNumber number="{worklistView>/f3}"></m:ObjectNumber>
+					</l:VerticalLayout>
+				</content>
+			</ObjectPageHeaderContent>
+			<l:VerticalLayout width="100%">
+				<fb:FilterBar id="filterBar" reset="onReset" search="onSearch" showRestoreButton="false" showClearButton="false">
+					<fb:filterItems>
+						<fb:FilterItem name="PersCombo" label="{i18n>PersCombo}">
+							<fb:control>
+								<m:MultiComboBox id="PersCombo" selectionChange="PersChange" selectionFinish="PersFinish" width="auto"
+									items="{ path: 'worklistView>/FPersList' ,length:'999', sorter: { path: 'key' }}">
+									<core:Item key="{worklistView>key}" text="{worklistView>txt}"/>
+								</m:MultiComboBox>
+							</fb:control>
+						</fb:FilterItem>
+						<fb:FilterItem name="DatePicker" label="{i18n>DatePicker}">
+							<fb:control>
+								<m:DatePicker id="DatePicker" value="{worklistView>/Today}" valueFormat="dd-MM-yyyy" displayFormat="long" change="DatePickerChange"/>
+							</fb:control>
+						</fb:FilterItem>
+						<fb:FilterItem name="MagazaCombo" label="{i18n>MagazaCombo}">
+							<fb:control>
+								<!--<m:MultiComboBox id="MagazaCombo" selectionChange="MagazaChange" selectionFinish="MagazaFinish" width="auto"-->
+								<!--	items="{ path: 'worklistView>/FMagazaList' ,length:'999'}">-->
+								<!--	<core:Item key="{worklistView>key}" text="{worklistView>txt}"/>-->
+								<!--</m:MultiComboBox>-->
+								<m:ComboBox id="MagazaCombo" change="MagazaChange" items="{ path: 'worklistView>/FMagazaList' ,length:'999', sorter: { path: 'key' }}"> 
+									<core:Item key="{worklistView>key}" text="{worklistView>txt}"/>
+								</m:ComboBox>
+							</fb:control>
+						</fb:FilterItem>
+						<fb:FilterItem name="VardiyaCombo" label="{i18n>VardiyaCombo}">
+							<fb:control>
+								<!--<m:MultiComboBox id="VardiyaCombo" selectionChange="VardiyaChange" selectionFinish="VardiyaFinish" width="auto"-->
+								<!--	items="{ path: 'worklistView>/FVardiyaList' ,length:'999'}">-->
+								<!--	<core:Item key="{worklistView>key}" text="{worklistView>txt}"/>-->
+								<!--</m:MultiComboBox>-->
+								<m:ComboBox id="VardiyaCombo" change="VardiyaChange" items="{ path: 'worklistView>/FVardiyaList' ,length:'999', sorter: { path: 'key' }}">
+									<core:Item key="{worklistView>key}" text="{worklistView>txt}"/>
+								</m:ComboBox>
+							</fb:control>
+						</fb:FilterItem>
+						<fb:FilterItem name="PtkCombo" label="{i18n>PtkCombo}">
+							<fb:control>
+								<!--<m:MultiComboBox id="PtkCombo" selectionChange="PtkChange" selectionFinish="PtkFinish" width="auto"-->
+								<!--	items="{ path: 'worklistView>/FPtkList' ,length:'999'}">-->
+								<!--	<core:Item key="{worklistView>key}" text="{worklistView>txt}"/>-->
+								<!--</m:MultiComboBox>-->
+								<m:ComboBox id="PtkCombo" change="PtkChange" items="{ path: 'worklistView>/FPtkList' ,length:'999', sorter: { path: 'key' } }">
+									<core:Item key="{worklistView>key}" text="{worklistView>txt}"/>
+								</m:ComboBox>
+							</fb:control>
+						</fb:FilterItem>
+					</fb:filterItems>
+				</fb:FilterBar>
+			</l:VerticalLayout>
+			<m:Table id="table" width="auto" class="sapUiResponsiveMargin" items="{worklistView>/MainList}" noDataText="{worklistView>/tableNoDataText}"
+				busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingThreshold="20" growingScrollToLoad="false"
+				updateFinished="onUpdateFinished" mode="MultiSelect">
+				<m:columns>
+					<m:Column id="Cpernr" hAlign="Center" width="8%">
+						<m:header>
+							<m:Label id="Lpernr" text="{i18n>Lpernr}"/>
+						</m:header>
+					</m:Column>
+					<m:Column id="Cename" hAlign="Center" width="14%">
+						<m:header>
+							<m:Label id="Lename" text="{i18n>Lename}"/>
+						</m:header>
+					</m:Column>
+					<m:Column id="Cdate" hAlign="Center" width="8%">
+						<m:header>
+							<m:Label id="Ldate" text="{i18n>Ldate}"/>
+						</m:header>
+					</m:Column>
+					<m:Column id="Cbegtm" hAlign="Center" width="8%">
+						<m:header>
+							<m:Label id="Lbegtm" text="{i18n>Lbegtm}"/>
+						</m:header>
+					</m:Column>
+					<m:Column id="Cendtm" hAlign="Center" width="8%">
+						<m:header>
+							<m:Label id="Lendtm" text="{i18n>Lendtm}"/>
+						</m:header>
+					</m:Column>
+					<m:Column id="Cmagazat" hAlign="Center" width="17%">
+						<m:header>
+							<m:Label id="Lmagazat" text="{i18n>Lmagazat}"/>
+						</m:header>
+					</m:Column>
+					<m:Column id="Cvardiyat" hAlign="Center" width="11%">
+						<m:header>
+							<m:Label id="Lvardiyat" text="{i18n>Lvardiyat}"/>
+						</m:header>
+					</m:Column>
+					<m:Column id="CGrup" hAlign="Center" width="11%">
+						<m:header>
+							<m:Label id="Lgrup" text="{i18n>Lgrup}"/>
+						</m:header>
+					</m:Column>
+					<m:Column id="Ccomment" hAlign="Center" width="14%">
+						<m:header>
+							<m:Label id="Lcomment" text="{i18n>Lcomment}"/>
+						</m:header>
+					</m:Column>
+				</m:columns>
+				<m:items>
+					<m:ColumnListItem counter="0" id="item1">
+						<m:cells>
+							<m:Text id="c1" text="{worklistView>Pernr}"/>
+							<m:Text id="c2" text="{worklistView>Ename}"/>
+							<m:Text id="c3" text="{worklistView>Date}"/>
+							<m:Text id="c4" text="{worklistView>Begtm}"/>
+							<m:Text id="c5" text="{worklistView>Endtm}"/>
+							<m:Text id="c6" text="{worklistView>MagazaT}"/>
+							<m:Text id="c7" text="{worklistView>VardiyaT}"/>
+							<m:Text id="c8" text="{worklistView>GrupT}"/>
+							<m:TextArea id="c9" value="{worklistView>Comment}" showExceededText="true" maxLength="50" width="100%" valueLiveUpdate="false"
+								editable="{worklistView>Rese1}"/>
+						</m:cells>
+					</m:ColumnListItem>
+				</m:items>
+			</m:Table>
+		</semantic:content>
+		<semantic:customFooterContent>
+			<m:Toolbar>
+				<m:ToolbarSpacer/>
+				<m:Button text="Excel" press="onPressExc" type="Emphasized" id="Exc" icon="sap-icon://excel-attachment"/>
+				<m:Button text="{i18n>Lbutton}" press="onPressAccept" type="Accept" id="Button"/>
+			</m:Toolbar>
+		</semantic:customFooterContent>
+	</semantic:FullscreenPage>
+</mvc:View>
